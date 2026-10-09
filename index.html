@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.5" />
+  <title>Tom & Summer · Undangan Pernikahan</title>
+  <!-- Tailwind via CDN + custom styles -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Font Awesome (icons) -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+  <!-- Google Fonts: Playfair Display + Poppins -->
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    * { scroll-behavior: smooth; }
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: #fcf7f0;
+      color: #3e2c1b;
+      overflow-x: hidden;
+    }
+    .font-serif { font-family: 'Playfair Display', serif; }
+    .gold-gradient {
+      background: linear-gradient(135deg, #d4af37 0%, #f3e5ab 70%, #d4af37 100%);
+    }
+    .gold-text { color: #b49450; }
+    .gold-border { border-color: #d4af37; }
+    .shadow-gold { box-shadow: 0 10px 25px -8px rgba(212, 175, 55, 0.25); }
+    .bg-champagne { background-color: #f9f2e7; }
+    .parallax-bg {
+      background-attachment: fixed;
+      background-position: center;
+      background-repeat: no-repeat;
+      background-size: cover;
+    }
+    .hero-overlay {
+      background: linear-gradient(to bottom, rgba(30, 20, 10, 0.2), rgba(20, 15, 5, 0.5));
+    }
+    .glass-card {
+      background: rgba(255, 248, 235, 0.7);
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+      border: 1px solid rgba(212, 175, 55, 0.15);
+    }
+    .transition-smooth {
+      transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+    }
+    /* scroll reveal animation helper */
+    .reveal {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.9s ease, transform 0.9s ease;
+    }
+    .reveal.active {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    /* audio button */
+    .music-btn {
+      background: rgba(212, 175, 55, 0.2);
+      backdrop-filter: blur(8px);
+      border: 1px solid #d4af37;
+    }
+    .countdown-item {
+      background: rgba(255, 245, 220, 0.6);
+      backdrop-filter: blur(4px);
+      border: 1px solid rgba(212, 175, 55, 0.25);
+    }
+    .input-rsvp {
+      background: rgba(255, 245, 235, 0.7);
+      border: 1px solid #e6d5b8;
+      transition: 0.3s;
+    }
+    .input-rsvp:focus {
+      border-color: #d4af37;
+      box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.2);
+      outline: none;
+    }
+  </style>
+</head>
+<body>
+
+<!-- ====== BACKGROUND MUSIC (auto-play, muted policy workaround) ====== -->
+<audio id="bgMusic" loop>
+  <source src="https://www.image2url.com/r2/default/audio/1784691511121-fc36d75f-099b-426d-8f7a-058bce2b24b0.mp3" type="audio/mpeg" />
+</audio>
+
+<!-- ====== FLOATING MUSIC TOGGLE ====== -->
+<button id="musicToggle" class="music-btn fixed bottom-6 right-6 z-50 flex items-center gap-2 px-4 py-3 rounded-full shadow-lg text-gold-800 backdrop-blur-sm transition-all hover:scale-105" style="background: rgba(212, 175, 55, 0.15); border: 1px solid #d4af37; color: #5f4a2e;">
+  <i class="fas fa-music text-lg"></i>
+  <span id="musicLabel" class="text-sm font-medium">Putar</span>
+</button>
+
+<!-- ====== HERO SECTION ====== -->
+<section id="hero" class="relative min-h-screen flex items-center justify-center px-4 py-20 overflow-hidden" style="background-image: url('https://cdn.phototourl.com/free/2026-07-22-b9d3bb0c-c2d7-48ff-a488-2657b8392d02.jpg'); background-size: cover; background-position: center 30%;">
+  <div class="absolute inset-0 hero-overlay"></div>
+  <div class="relative z-10 text-center text-white max-w-4xl mx-auto px-4">
+    <p class="text-sm md:text-base tracking-[0.3em] uppercase opacity-80 font-light">The Wedding</p>
+    <h1 class="font-serif text-5xl md:text-7xl lg:text-8xl font-bold mt-2 drop-shadow-lg">Tom <span class="text-[#e8d5a3]">&</span> Summer</h1>
+    <p class="text-lg md:text-2xl mt-4 font-light tracking-wider opacity-90">7 April 2027</p>
+    <div class="mt-8 flex flex-wrap justify-center gap-5 text-sm md:text-base">
+      <span class="bg-white/10 backdrop-blur-sm px-5 py-2 rounded-full border border-white/20"><i class="fas fa-ring mr-2 text-[#d4af37]"></i> Akad 07:00</span>
+      <span class="bg-white/10 backdrop-blur-sm px-5 py-2 rounded-full border border-white/20"><i class="fas fa-glass-cheers mr-2 text-[#d4af37]"></i> Resepsi 08:30</span>
+    </div>
+    <div class="mt-10 flex justify-center">
+      <a href="#guestbook" class="gold-gradient text-[#2b1f0f] px-8 py-3 rounded-full font-medium shadow-lg shadow-[#d4af37]/30 hover:scale-105 transition-transform duration-300">Buku Tamu</a>
+    </div>
+  </div>
+  <div class="absolute bottom-8 left-0 right-0 text-center text-white/60 text-xs font-light tracking-widest">
+    <a id="scrollDownLink" href="#countdown" class="inline-block hover:text-white/80 cursor-pointer">scroll down <i class="fas fa-chevron-down ml-2 animate-bounce"></i></a>
+  </div>
+</section>
+
+<!-- ====== COUNTDOWN ====== -->
+<section id="countdown" class="py-14 bg-champagne">
+  <div class="max-w-4xl mx-auto px-4 text-center">
+    <p class="text-sm uppercase tracking-[0.2em] gold-text font-medium">Menuju hari bahagia</p>
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mt-6">
+      <div class="countdown-item rounded-2xl p-4 shadow-sm"><span id="days" class="block text-4xl md:text-5xl font-serif gold-text">00</span><span class="text-xs uppercase tracking-widest text-[#7a6548]">Hari</span></div>
+      <div class="countdown-item rounded-2xl p-4 shadow-sm"><span id="hours" class="block text-4xl md:text-5xl font-serif gold-text">00</span><span class="text-xs uppercase tracking-widest text-[#7a6548]">Jam</span></div>
+      <div class="countdown-item rounded-2xl p-4 shadow-sm"><span id="minutes" class="block text-4xl md:text-5xl font-serif gold-text">00</span><span class="text-xs uppercase tracking-widest text-[#7a6548]">Menit</span></div>
+      <div class="countdown-item rounded-2xl p-4 shadow-sm"><span id="seconds" class="block text-4xl md:text-5xl font-serif gold-text">00</span><span class="text-xs uppercase tracking-widest text-[#7a6548]">Detik</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ====== CERITA CINTA ====== -->
+<section class="py-20 px-4 bg-white/50" style="background: #fcf6ee;">
+  <div class="max-w-3xl mx-auto text-center reveal">
+    <h2 class="font-serif text-4xl md:text-5xl gold-text">Hanya bisa dirasakan,</h2>
+    <p class="font-serif italic text-xl md:text-2xl mt-2 text-[#5f4a2e]">bukan dijelaskan</p>
+    <div class="w-20 h-[2px] gold-gradient mx-auto my-6"></div>
+    <p class="text-base md:text-lg leading-relaxed text-[#5c4b35] max-w-2xl mx-auto font-light">
+      Seperti cahaya yang tak pernah pudar, pertemuan kami adalah takdir yang melampaui logika. 
+      Dua jiwa yang saling menemukan di antara hiruk pikuk Los Angeles. Dan sejak saat itu, 
+      waktu berhenti untuk dijelaskan — hanya rasa yang abadi.
+    </p>
+    <div class="mt-8 flex justify-center gap-4 text-gold-600">
+      <i class="fas fa-heart text-2xl text-[#d4af37]"></i>
+      <i class="fas fa-infinity text-2xl text-[#d4af37]"></i>
+    </div>
+  </div>
+</section>
+
+<!-- ====== GALERI FOTO ====== -->
+<section class="py-16 px-4 bg-champagne/40">
+  <div class="max-w-6xl mx-auto">
+    <h3 class="text-center font-serif text-3xl gold-text mb-8">Choose Our Gallery</h3>
+    <div class="grid grid-cols-2 md:grid-cols-3 gap-3 md:gap-4">
+      <img class="rounded-xl shadow-md hover:scale-[1.02] transition-transform duration-500 w-full h-48 md:h-56 object-cover" src="https://i.pinimg.com/736x/17/db/e8/17dbe8740f55c8fb7148aac4fa1cdfa1.jpg" alt="gallery" loading="lazy" />
+      <img class="rounded-xl shadow-md hover:scale-[1.02] transition-transform duration-500 w-full h-48 md:h-56 object-cover" src="https://i.pinimg.com/736x/40/42/fd/4042fdbc0b466bd5ba9cdb0cade2dab5.jpg" alt="gallery" loading="lazy" />
+      <img class="rounded-xl shadow-md hover:scale-[1.02] transition-transform duration-500 w-full h-48 md:h-56 object-cover" src="https://i.pinimg.com/736x/e1/65/10/e1651052c199ff680654c27a819cce96.jpg" alt="gallery" loading="lazy" />
+      <img class="rounded-xl shadow-md hover:scale-[1.02] transition-transform duration-500 w-full h-48 md:h-56 object-cover" src="https://i.pinimg.com/736x/d0/f1/3a/d0f13a109b588dca3ab0ee4937012473.jpg" alt="gallery" loading="lazy" />
+      <img class="rounded-xl shadow-md hover:scale-[1.02] transition-transform duration-500 w-full h-48 md:h-56 object-cover" src="https://i.pinimg.com/736x/70/1a/b0/701ab0583b8010baf5fdcbedbf86d957.jpg" alt="gallery" loading="lazy" />
+      <img class="rounded-xl shadow-md hover:scale-[1.02] transition-transform duration-500 w-full h-48 md:h-56 object-cover" src="https://i.pinimg.com/1200x/44/96/fc/4496fcaca4155ea85ba5b785cbcde77b.jpg" alt="gallery" loading="lazy" />
+    </div>
+  </div>
+</section>
+
+<!-- ====== LOKASI (MAPS + INFO) ====== -->
+<section class="py-16 px-4 bg-white">
+  <div class="max-w-5xl mx-auto">
+    <h3 class="text-center font-serif text-3xl gold-text mb-6">Lokasi</h3>
+    <div class="grid md:grid-cols-2 gap-8">
+      <div class="bg-champagne/30 p-6 rounded-2xl shadow-sm">
+        <h4 class="font-serif text-xl gold-text"><i class="fas fa-mosque mr-2"></i> Akad Nikah</h4>
+        <p class="mt-2 text-[#3e2c1b]">Downtown Los Angeles (DTLA) · 07:00</p>
+        <div class="mt-4 h-40 bg-gray-200 rounded-lg overflow-hidden shadow-inner">
+          <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3306.1867!2d-118.2437!3d34.0522!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x80c2f5c2b0c0b0b1%3A0x2f0b0b0b0b0b0b0b!2sDowntown%20Los%20Angeles!5e0!3m2!1sen!2sus!4v1700000000000" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+        </div>
+      </div>
+      <div class="bg-champagne/30 p-6 rounded-2xl shadow-sm">
+        <h4 class="font-serif text-xl gold-text"><i class="fas fa-glass-cheers mr-2"></i> Resepsi</h4>
+        <p class="mt-2 text-[#3e2c1b]">Angels Knoll · 08:30</p>
+        <div class="mt-4 h-40 bg-gray-200 rounded-lg overflow-hidden shadow-inner">
+          <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3306.1867!2d-118.2437!3d34.0522!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x80c2f5c2b0c0b0b1%3A0x2f0b0b0b0b0b0b0b!2sAngels%20Knoll!5e0!3m2!1sen!2sus!4v1700000000000" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ====== WEDDING GIFT ====== -->
+<section class="py-14 px-4 bg-[#f3ebdb]">
+  <div class="max-w-2xl mx-auto text-center reveal">
+    <h3 class="font-serif text-3xl gold-text">Wedding Gift</h3>
+    <p class="mt-2 text-sm text-[#5f4a2e]">Doa dan kehadiran adalah hadiah terbaik, namun jika ingin memberi</p>
+    <div class="mt-6 bg-white/70 p-6 rounded-2xl shadow-md border border-[#d4af37]/30">
+      <p class="font-medium text-[#3e2c1b]">BCA · Romans</p>
+      <p class="text-xl font-serif gold-text tracking-wider">877 6456</p>
+      <p class="text-sm text-[#7a6548] mt-1">a.n. Tom & Summer</p>
+    </div>
+  </div>
+</section>
+
+<!-- ====== BUKU TAMU / UCAPAN ====== -->
+<section class="py-16 px-4 bg-[#fcf6ee]">
+  <div class="max-w-2xl mx-auto">
+    <div class="text-center mb-6">
+      <h3 class="font-serif text-3xl gold-text">Buku Tamu</h3>
+      <p class="italic text-[#7a6548] text-sm mt-1">"Mohon doanya untuk kami agar menjadi rumah tangga yang sakinah, mawadah dan warohmah"</p>
+    </div>
+    <form id="guestMsgForm" class="flex flex-col gap-3">
+      <input type="text" id="guestName" placeholder="Nama" class="input-rsvp p-3 rounded-xl w-full" required />
+      <textarea id="guestMsg" rows="3" placeholder="Ucapan & doa..." class="input-rsvp p-3 rounded-xl w-full" required></textarea>
+      <button type="submit" class="gold-gradient px-6 py-3 rounded-full font-medium w-full md:w-auto self-center shadow-sm">Kirim Ucapan</button>
+    </form>
+    <div id="guestMessages" class="mt-8 space-y-4 max-h-80 overflow-y-auto pr-1"></div>
+  </div>
+</section>
+
+<!-- ====== FOOTER ====== -->
+<footer class="py-8 bg-[#2b1f0f] text-white/70 text-center text-sm">
+  <p class="font-serif text-lg gold-text">Tom & Summer</p>
+  <p class="mt-1 tracking-wider">7 April 2027 · Los Angeles</p>
+  <p class="mt-4 text-[10px] uppercase tracking-[0.2em]">Made with <i class="fas fa-heart text-[#d4af37]"></i> for our day</p>
+</footer>
+
+<!-- ====== JAVASCRIPT ====== -->
+<script>
+  (function(){
+    // ---- MUSIC TOGGLE ----
+    const audio = document.getElementById('bgMusic');
+    const toggleBtn = document.getElementById('musicToggle');
+    const label = document.getElementById('musicLabel');
+    let isPlaying = false;
+
+    toggleBtn.addEventListener('click', function(e) {
+      e.preventDefault();
+      if (audio.paused) {
+        audio.play().then(() => {
+          isPlaying = true;
+          label.textContent = 'Mute';
+          toggleBtn.innerHTML = '<i class="fas fa-volume-up text-lg"></i> <span id="musicLabel" class="text-sm font-medium">Mute</span>';
+        }).catch(() => {
+          // auto-play block fallback
+          label.textContent = 'Putar';
+        });
+      } else {
+        audio.pause();
+        isPlaying = false;
+        label.textContent = 'Putar';
+        toggleBtn.innerHTML = '<i class="fas fa-music text-lg"></i> <span id="musicLabel" class="text-sm font-medium">Putar</span>';
+      }
+    });
+
+    function tryPlayAudio() {
+      if (isPlaying) return;
+      audio.play().then(() => {
+        isPlaying = true;
+        label.textContent = 'Mute';
+        toggleBtn.innerHTML = '<i class="fas fa-volume-up text-lg"></i> <span id="musicLabel" class="text-sm font-medium">Mute</span>';
+      }).catch(() => {
+        // autoplay blocked, keep button state as-is
+      });
+    }
+
+    const scrollDownLink = document.getElementById('scrollDownLink');
+    if (scrollDownLink) {
+      scrollDownLink.addEventListener('click', tryPlayAudio);
+    }
+
+    let hasAutoPlayTried = false;
+    window.addEventListener('scroll', function() {
+      const hero = document.getElementById('hero');
+      const scrolled = window.pageYOffset;
+      if (scrolled < window.innerHeight) {
+        hero.style.backgroundPositionY = `calc(30% + ${scrolled * 0.05}px)`;
+      }
+      if (!hasAutoPlayTried) {
+        hasAutoPlayTried = true;
+        tryPlayAudio();
+      }
+    });
+
+    // ---- COUNTDOWN ----
+    const targetDate = new Date('2027-04-07T07:00:00').getTime();
+    function updateCountdown() {
+      const now = new Date().getTime();
+      const diff = targetDate - now;
+      if (diff <= 0) {
+        document.getElementById('days').textContent = '00';
+        document.getElementById('hours').textContent = '00';
+        document.getElementById('minutes').textContent = '00';
+        document.getElementById('seconds').textContent = '00';
+        return;
+      }
+      const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+      document.getElementById('days').textContent = String(days).padStart(2, '0');
+      document.getElementById('hours').textContent = String(hours).padStart(2, '0');
+      document.getElementById('minutes').textContent = String(minutes).padStart(2, '0');
+      document.getElementById('seconds').textContent = String(seconds).padStart(2, '0');
+    }
+    updateCountdown();
+    setInterval(updateCountdown, 1000);
+
+    // ---- GUEST BOOK (simulasi) ----
+    const msgContainer = document.getElementById('guestMessages');
+    const guestForm = document.getElementById('guestMsgForm');
+    const guestName = document.getElementById('guestName');
+    const guestMsg = document.getElementById('guestMsg');
+
+    // initial dummy messages
+    const dummy = [
+      { name: 'Rina & Budi', msg: 'Selamat menempuh hidup baru, semoga sakinah mawadah warohmah!' },
+      { name: 'Dewi', msg: 'Bahagia selalu untuk Tom & Summer ❤️' }
+    ];
+    dummy.forEach(item => appendMessage(item.name, item.msg));
+
+    function appendMessage(name, msg) {
+      const div = document.createElement('div');
+      div.className = 'glass-card p-4 rounded-xl shadow-sm border-l-4 border-[#d4af37]';
+      div.innerHTML = `<span class="font-serif text-gold-800 font-semibold">${name}</span><p class="text-sm mt-1 text-[#3e2c1b]">${msg}</p>`;
+      msgContainer.prepend(div);
+    }
+
+    guestForm.addEventListener('submit', function(e) {
+      e.preventDefault();
+      const name = guestName.value.trim();
+      const msg = guestMsg.value.trim();
+      if (name && msg) {
+        appendMessage(name, msg);
+        guestName.value = '';
+        guestMsg.value = '';
+      }
+    });
+
+    // ---- SCROLL REVEAL (Intersection Observer) ----
+    const reveals = document.querySelectorAll('.reveal');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('active');
+        }
+      });
+    }, { threshold: 0.2 });
+    reveals.forEach(el => observer.observe(el));
+
+    // ---- PARALLAX gentle effect on hero (optional) ----
+    window.addEventListener('scroll', function() {
+      const hero = document.getElementById('hero');
+      const scrolled = window.pageYOffset;
+      if (scrolled < window.innerHeight) {
+        hero.style.backgroundPositionY = `calc(30% + ${scrolled * 0.05}px)`;
+      }
+    });
+
+  })();
+</script>
+</body>
+</html>
